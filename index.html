@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+<meta charset="UTF-8">
+<title>Anastasia ❤️ Luka</title>
+
+<style>
+body {
+    margin: 0;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #2b0a14, #5a0f2e);
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    color: #f5c6d6;
+}
+
+.container {
+    position: relative;
+    z-index: 2;
+    margin-top: 70px;
+}
+
+h1 {
+    font-size: 44px;
+    color: #ff8fb3;
+}
+
+p {
+    font-size: 22px;
+}
+
+img {
+    width: 260px;
+    border-radius: 25px;
+    margin: 20px 0;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+
+.buttons {
+    margin-top: 30px;
+}
+
+button {
+    padding: 15px 35px;
+    font-size: 22px;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#yes {
+    background: linear-gradient(45deg, #ff4f87, #ff85a2);
+    color: white;
+}
+
+#no {
+    background-color: #555;
+    color: white;
+    position: absolute;
+}
+
+/* ნელი, მუქი გულები */
+.heart {
+    position: fixed;
+    bottom: -30px;
+    font-size: 22px;
+    animation: float 12s linear infinite;
+    opacity: 0.6;
+}
+
+@keyframes float {
+    from { transform: translateY(0); }
+    to { transform: translateY(-120vh); }
+}
+
+/* წერილი */
+.letter {
+    width: 330px;
+    margin: 40px auto;
+    background: #3b0f22;
+    color: #ffd6e5;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.7);
+    animation: open 1.2s ease forwards;
+}
+
+@keyframes open {
+    from {
+        transform: scaleY(0);
+        opacity: 0;
+    }
+    to {
+        transform: scaleY(1);
+        opacity: 1;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<audio autoplay loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container">
+    <h1>გახდები ჩემი ვალენტინი ბასუსუნა ? ❤️</h1>
+    <p>ჩემო პატარა წრუწუნა  🥹</p>
+
+    <img src="photo.jpg" alt="ჩვენი ფოტო">
+
+    <p>ჩემი სიცოცხლის აზრი ხარ შენ 💌</p>
+
+    <div class="buttons">
+        <button id="yes" onclick="yesClicked()">კი 💖</button>
+        <button id="no" onclick="moveNo()">არა 🙈</button>
+    </div>
+
+    <div id="message"></div>
+</div>
+
+<script>
+let yesSize = 22;
+let noCount = 0;
+
+function moveNo() {
+    const noBtn = document.getElementById("no");
+
+    noBtn.style.left = Math.random() * (window.innerWidth - 120) + "px";
+    noBtn.style.top = Math.random() * (window.innerHeight - 120) + "px";
+
+    noCount++;
+
+    if (noCount >= 3) {
+        noBtn.style.display = "none";
+    }
+
+    yesSize += 6;
+    document.getElementById("yes").style.fontSize = yesSize + "px";
+}
+
+function yesClicked() {
+    document.getElementById("message").innerHTML = `
+        <div class="letter">
+            ❤️💗❤️<br><br>
+            ჰიჰიჰი, მიყვარხარ 💕<br><br>
+            მადლობა რომ ხარ ჩემს ცხოვრებაში.<br>
+            ბაი 😘 p.s საჩუქარს დღეს და 
+            ყვავილებს 14 ში მიიღებ 
+        </div>
+    `;
+}
+
+/* ნელი გულები */
+setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 12000);
+}, 800);
+</script>
+
+</body>
+</html>
