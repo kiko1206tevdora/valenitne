@@ -19,18 +19,34 @@ body {
 
 /* ფოტოები */
 img {
-    width: 260px;
     border-radius: 25px;
-    margin-top: 20px;
     box-shadow: 0 20px 40px rgba(0,0,0,0.6);
     transition: opacity 1s ease-in-out;
     opacity:0;
 }
 
+#photo1 {
+    width: 260px;
+    margin-top: 20px;
+}
+
+#photo2 {
+    width: 320px; /* ცოტა გაზრდილი */
+    margin-top: 10px;
+}
+
+/* ტექსტი photo2–ს ზემოთ */
+#photo2Text {
+    font-size: 28px;
+    margin-bottom: 10px;
+    opacity:0;
+    color: #ff8fb3;
+}
+
 /* დიდი ტექსტი ჯერ ადრეა */
 #textMsg {
     font-size: 36px;
-    margin-top: 80px; /* სტარტის დაშორება ზემოდან */
+    margin-top: 80px;
     margin-bottom: 20px;
 }
 
@@ -49,7 +65,7 @@ button {
     justify-content: center; 
     gap: 30px; 
     opacity:0;
-    margin-top:10px; /* ახლოს ფოტო2-ს */
+    margin-top:10px; 
 }
 
 /* ღილაკების ფერები */
@@ -75,7 +91,7 @@ button#no { background-color: #555; color:white;}
     box-shadow: 0 15px 35px rgba(0,0,0,0.7);
     animation: open 1s ease forwards;
     font-size:18px;
-    margin-top: 15px; /* ახლოს ღილაკებთან */
+    margin-top: 15px; 
 }
 
 /* ფლოტის ანიმაცია */
@@ -90,6 +106,9 @@ button#no { background-color: #555; color:white;}
 
 <!-- ფოტოები -->
 <img src="photo1.jpg" id="photo1">
+
+<!-- ტექსტი photo2–ს ზემოთ -->
+<div id="photo2Text">გახდები ჩემი ვალენტინი? ❤️</div>
 <img src="photo2.jpg" id="photo2">
 
 <!-- ეტაპობრივი ღილაკები -->
@@ -141,12 +160,16 @@ document.getElementById("loveBtn").addEventListener("click", function(){
 
     this.style.display='none';
 
-    // Ki/No ღილაკები ზემოთ photo2–სთან
+    // ტექსტი photo2–ს ზემოთ
+    const text2 = document.getElementById("photo2Text");
+    text2.style.opacity = 1;
+
+    // Ki/No ღილაკები photo2–ს ქვემოთ
     const buttonsDiv = document.getElementById("buttonsDiv");
     buttonsDiv.style.opacity=1;
     buttonsDiv.style.marginTop = "10px";
 
-    // წერილი ზემოთ, ახლოს ფოტო2–ს და ღილაკებთან
+    // წერილი ცოტა ქვემოთ ღილაკებიდან
     const messageDiv = document.getElementById("message");
     messageDiv.style.marginTop = "15px";
 });
@@ -166,6 +189,7 @@ function moveNo(){
 /* "კი" ღილაკი */
 function yesClicked(){
     document.getElementById("buttonsDiv").style.display='none';
+    document.getElementById("photo2Text").style.display='none';
     document.getElementById("message").innerHTML=`
         <div class="letter">
         ❤️💗❤️<br><br>
