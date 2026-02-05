@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Anastasia ❤️ Luka</title>
-
 <style>
 body {
     margin: 0;
@@ -20,13 +19,22 @@ body {
     margin-top: 50px;
 }
 
-h1 {
-    font-size: 44px;
-    color: #ff8fb3;
-}
-
-p {
-    font-size: 22px;
+#earlyMsg {
+    font-size: 32px;
+    padding: 60px 40px;
+    background: rgba(255, 79, 135, 0.85);
+    border-radius: 50%;
+    color: white;
+    margin: 120px auto 40px;
+    width: 250px;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    opacity: 0;
+    transform: scale(0.5);
+    transition: 1s ease;
 }
 
 img {
@@ -38,11 +46,13 @@ img {
     position: relative;
 }
 
-.buttons {
-    margin-top: 30px;
-    display: flex;
-    justify-content: center;
-    gap: 40px;
+.buttons { 
+    margin-top: 30px; 
+    display: flex; 
+    justify-content: center; 
+    gap: 40px; 
+    opacity:0; 
+    transition:1s;
 }
 
 button {
@@ -53,30 +63,10 @@ button {
     cursor: pointer;
     transition: 0.3s;
 }
+#yes { background: linear-gradient(45deg, #ff4f87, #ff85a2); color: white;}
+#no { background-color: #555; color:white; position:absolute;}
+#startBtn { padding: 15px 40px; font-size: 26px; border-radius:50px; background:#ff4f87; color:white; cursor:pointer; margin-bottom:20px;}
 
-#yes {
-    background: linear-gradient(45deg, #ff4f87, #ff85a2);
-    color: white;
-}
-
-#no {
-    background-color: #555;
-    color: white;
-    position: absolute;
-}
-
-#startBtn {
-    padding: 15px 40px;
-    font-size: 26px;
-    border: none;
-    border-radius: 50px;
-    background: #ff4f87;
-    color: white;
-    cursor: pointer;
-    margin-bottom: 20px;
-}
-
-/* ნელი, მუქი გულები */
 .heart {
     position: fixed;
     bottom: -30px;
@@ -85,15 +75,11 @@ button {
     opacity: 0.6;
 }
 
-@keyframes float {
-    from { transform: translateY(0); }
-    to { transform: translateY(-120vh); }
-}
+@keyframes float { from {transform: translateY(0);} to {transform: translateY(-120vh);} }
 
-/* წერილი */
 .letter {
     width: 330px;
-    margin: 40px auto;
+    margin: 20px auto 0px; /* მეტი სივრცე ზედა */
     background: #3b0f22;
     color: #ffd6e5;
     padding: 25px;
@@ -102,19 +88,8 @@ button {
     animation: open 1.2s ease forwards;
 }
 
-@keyframes open {
-    from { transform: scaleY(0); opacity: 0; }
-    to { transform: scaleY(1); opacity: 1; }
-}
+@keyframes open { from {transform: scaleY(0); opacity:0;} to {transform: scaleY(1); opacity:1;} }
 
-/* bounce effect for "no" button */
-@keyframes bounce {
-    0% { transform: translate(0,0); }
-    25% { transform: translate(-15px,-10px); }
-    50% { transform: translate(10px,5px); }
-    75% { transform: translate(-10px,10px); }
-    100% { transform: translate(0,0); }
-}
 </style>
 </head>
 <body>
@@ -123,92 +98,15 @@ button {
     <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<div class="container" id="mainContainer">
-    <h1>გახდები ჩემი ვალენტინი ბასუსუნა ? ❤️</h1>
-    <p>ჩემო პატარა წრუწუნა </p>
+<div class="container">
 
-    <!-- ფოტოები -->
-    <img src="photo1.jpg" id="mainPhoto" alt="ჩემი ბოთე გოგო" style="opacity:1;">
-    <img src="photo2.jpg" id="secondPhoto" alt="ჰიჰი" style="opacity:0; position:absolute; top:50px; left:50%; transform:translateX(-50%);">
+    <div id="earlyMsg">ცოტა ადრეა...</div>
 
-    <p>ჩემი სიცოცხლის აზრი ხარ შენ 💌</p>
+    <img src="photo1.jpg" id="mainPhoto" style="opacity:0;">
+    <img src="photo2.jpg" id="secondPhoto" style="opacity:0; position:absolute; top:50px; left:50%; transform:translateX(-50%);">
 
-    <!-- დაწყების ღილაკი -->
-    <button id="startBtn" onclick="startValentine()">მიყვარხარ 💖</button>
+    <button id="startBtn" style="opacity:0;">მიყვარხარ 💖</button>
 
-    <div class="buttons" id="buttonsDiv" style="display:none;">
+    <div class="buttons" id="buttonsDiv">
         <button id="yes" onclick="yesClicked()">კი 💖</button>
-        <button id="no" onclick="moveNo()">არა 🙈</button>
-    </div>
-
-    <div id="message"></div>
-</div>
-
-<script>
-let yesSize = 22;
-let noCount = 0;
-
-function startValentine() {
-    // ჩართე მუსიკა
-    document.getElementById("mymusic").play();
-
-    // ნაზად ჩასვლა მეორე ფოტოზე
-    const photo1 = document.getElementById("mainPhoto");
-    const photo2 = document.getElementById("secondPhoto");
-
-    // fade effect
-    photo1.style.opacity = 0;
-    photo2.style.opacity = 1;
-
-    // წაშალე მიყვარხარ ღილაკი
-    document.getElementById("startBtn").style.display = "none";
-
-    // ჩაჩვენე ღილაკები "კი/არა"
-    document.getElementById("buttonsDiv").style.display = "flex";
-}
-
-function moveNo() {
-    const noBtn = document.getElementById("no");
-
-    // შემთხვევითი პოზიცია
-    noBtn.style.left = Math.random() * (window.innerWidth - 120) + "px";
-    noBtn.style.top = Math.random() * (window.innerHeight - 60) + "px";
-
-    // bounce effect
-    noBtn.style.animation = "bounce 0.6s";
-
-    noCount++;
-    yesSize += 6;
-    document.getElementById("yes").style.fontSize = yesSize + "px";
-
-    if (noCount >= 5) {
-        noBtn.style.display = "none";
-    }
-}
-
-function yesClicked() {
-    document.getElementById("message").innerHTML = `
-        <div class="letter">
-            ❤️💗❤️<br><br>
-            ჰიჰიჰი, მიყვარხარ 💕<br><br>
-            მადლობა რომ ხარ ჩემს ცხოვრებაში.<br>
-            ბაი 😘 p.s საჩუქარს დღეს და 
-            ყვავილებს 14 ში მიიღებ 
-        </div>
-    `;
-}
-
-/* ნელი გულები */
-setInterval(() => {
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerHTML = "❤️";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = (Math.random() * 20 + 15) + "px";
-    document.body.appendChild(heart);
-
-    setTimeout(() => heart.remove(), 12000);
-}, 800);
-</script>
-</body>
-</html>
+        <button id="no" onclick="moveNo()"
