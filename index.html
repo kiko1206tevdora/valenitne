@@ -13,69 +13,44 @@ body {
     text-align: center;
     color: #f5c6d6;
     display: flex;
-    justify-content: center;
-    align-items: flex-start; /* ზედიდან განლაგება */
-}
-
-.container {
-    position: relative;
-    width: 100%;
-    max-width: 400px;
-    margin-top: 50px; /* ცოტა ზედ */
-}
-
-/* სტარტი: გულის ფორმა */
-#earlyMsg {
-    font-size: 28px;
-    padding: 50px 40px;
-    background: rgba(255, 79, 135, 0.85);
-    border-radius: 50%;
-    color: white;
-    margin: 20px auto 20px;
-    width: 220px;
-    height: 220px;
-    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* მაღლა გამოვიყენოთ „ჯერ ადრეა…“ */
     align-items: center;
-    justify-content: center;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-    opacity: 0;
-    transform: scale(0.5);
-    transition: 1s ease;
+    padding-top: 80px; /* დაშორება ტავიდან */
 }
 
-/* Images */
+button {
+    padding: 12px 35px;
+    font-size: 22px;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+/* ფოტოები */
 img {
     width: 260px;
     border-radius: 25px;
-    margin: 15px 0;
+    margin-top: 20px;
     box-shadow: 0 20px 40px rgba(0,0,0,0.6);
     transition: opacity 1s ease-in-out;
-    position: relative;
+    opacity:0;
 }
 
-/* Buttons */
+/* Ki/No Buttons გვერდიგვერდ */
 .buttons { 
     margin-top: 20px; 
     display: flex; 
     justify-content: center; 
     gap: 30px; 
-    opacity:0; 
-    transition:1s;
+    position: relative;
+    opacity:0;
 }
 
-button {
-    padding: 15px 35px;
-    font-size: 22px;
-    border: none;
-    border-radius: 40px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-#yes { background: linear-gradient(45deg, #ff4f87, #ff85a2); color: white;}
-#no { background-color: #555; color:white; position:absolute;}
-#startBtn { padding: 15px 40px; font-size: 24px; border-radius:50px; background:#ff4f87; color:white; cursor:pointer; margin-bottom:10px;}
+button#yes { background: linear-gradient(45deg, #ff4f87, #ff85a2); color: white;}
+button#no { background-color: #555; color:white;}
 
-/* Hearts */
+/* გულები */
 .heart {
     position: fixed;
     bottom: -30px;
@@ -83,12 +58,11 @@ button {
     animation: float 12s linear infinite;
     opacity: 0.6;
 }
-@keyframes float { from {transform: translateY(0);} to {transform: translateY(-120vh);} }
 
-/* Letter */
+/* წერილი */
 .letter {
     width: 320px;
-    margin: 10px auto 0px; /* ზემოთ ოდნავ მეტი ადგილი */
+    margin: 10px auto 0px; 
     background: #3b0f22;
     color: #ffd6e5;
     padding: 20px;
@@ -98,7 +72,13 @@ button {
     font-size:18px;
 }
 
-@keyframes open { from {transform: scaleY(0); opacity:0;} to {transform: scaleY(1); opacity:1;} }
+/* დიდი ტექსტი ჯერ ადრეა */
+#textMsg {
+    font-size: 36px; /* ცოტა გავზარდეთ */
+    margin-bottom: 20px;
+}
+
+@keyframes float { from {transform: translateY(0);} to {transform: translateY(-120vh);} }
 </style>
 </head>
 <body>
@@ -107,89 +87,28 @@ button {
     <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<div class="container">
+<!-- ფოტოები -->
+<img src="photo1.jpg" id="photo1">
+<img src="photo2.jpg" id="photo2">
 
-    <!-- სტარტი -->
-    <div id="earlyMsg">ცოტა ადრეა...</div>
-
-    <!-- ფოტოები -->
-    <img src="photo1.jpg" id="mainPhoto" style="opacity:0;">
-    <img src="photo2.jpg" id="secondPhoto" style="opacity:0; position:absolute; top:50px; left:50%; transform:translateX(-50%);">
-
-    <!-- Start button -->
-    <button id="startBtn" style="opacity:0;">მიყვარხარ 💖</button>
-
-    <!-- Ki/No Buttons -->
-    <div class="buttons" id="buttonsDiv">
-        <button id="yes" onclick="yesClicked()">კი 💖</button>
-        <button id="no" onclick="moveNo()">არა 🙈</button>
-    </div>
-
-    <div id="message"></div>
+<!-- ეტაპობრივი ღილაკები -->
+<div id="stageDiv">
+    <div id="textMsg">ჯერ ადრეა...</div>
+    <button id="startBtn">მაგრამ…</button>
+    <button id="loveBtn" style="display:none;">მიყვარხარ 💖</button>
 </div>
+
+<!-- Ki/No Buttons -->
+<div class="buttons" id="buttonsDiv">
+    <button id="yes" onclick="yesClicked()">კი 💖</button>
+    <button id="no" onclick="moveNo()">არა 🙈</button>
+</div>
+
+<div id="message"></div>
 
 <script>
 let yesSize = 22;
 let noCount = 0;
-
-/* სტარტი fade-in */
-window.onload = function(){
-    const early = document.getElementById('earlyMsg');
-    const startBtn = document.getElementById('startBtn');
-    setTimeout(()=>{
-        early.style.opacity=1;
-        early.style.transform='scale(1)';
-        startBtn.style.opacity=1;
-    },500);
-};
-
-function startValentine(){
-    document.getElementById("mymusic").play();
-
-    const early = document.getElementById('earlyMsg');
-    early.style.opacity=0;
-
-    const photo1 = document.getElementById("mainPhoto");
-    photo1.style.opacity=1;
-
-    const startBtn = document.getElementById("startBtn");
-    startBtn.onclick=function(){
-        photo1.style.opacity=0;
-        const photo2 = document.getElementById("secondPhoto");
-        photo2.style.opacity=1;
-
-        startBtn.style.display='none';
-        const buttonsDiv = document.getElementById("buttonsDiv");
-        buttonsDiv.style.opacity=1;
-    }
-}
-
-/* "არა" ღილაკი */
-function moveNo(){
-    const noBtn = document.getElementById("no");
-    // რბილი გადაადგილება, ახლოს ცენტრთან
-    noBtn.style.left = (window.innerWidth * 0.35 + Math.random() * window.innerWidth * 0.3) + "px";
-    noBtn.style.top = (window.innerHeight * 0.3 + Math.random() * window.innerHeight * 0.3) + "px";
-    
-    noCount++;
-    yesSize += 6;
-    document.getElementById("yes").style.fontSize = yesSize + 'px';
-
-    if(noCount >= 5){ noBtn.style.display='none'; }
-}
-
-/* "კი" ღილაკი */
-function yesClicked(){
-    document.getElementById("message").innerHTML=`
-        <div class="letter">
-        ❤️💗❤️<br><br>
-        ჰიჰიჰი, მიყვარხარ 💕<br><br>
-        მადლობა რომ ხარ ჩემს ცხოვრებაში.<br>
-        ბაი 😘 p.s საჩუქარს დღეს და 
-        ყვავილებს 14 ში მიიღებ 
-        </div>
-    `;
-}
 
 /* გულები */
 setInterval(()=>{
@@ -202,8 +121,65 @@ setInterval(()=>{
     setTimeout(()=>heart.remove(),12000);
 },800);
 
-document.getElementById("startBtn").addEventListener("click",startValentine);
-</script>
+/* პირველი ღილაკი – "მაგრამ…" */
+document.getElementById("startBtn").addEventListener("click", function(){
+    const music = document.getElementById("mymusic");
+    music.play();
 
+    this.style.display='none';
+    document.getElementById("textMsg").style.display='none';
+
+    // photo1 გამოჩნდება
+    document.getElementById("photo1").style.opacity=1;
+
+    // მიყვარხარ ღილაკი გამოჩნდება
+    document.getElementById("loveBtn").style.display='inline-block';
+});
+
+/* მიყვარხარ ღილაკი */
+document.getElementById("loveBtn").addEventListener("click", function(){
+    // photo1 დამქრო (optional fade)
+    document.getElementById("photo1").style.opacity=0;
+
+    // photo2 გამოჩნდება
+    document.getElementById("photo2").style.opacity=1;
+
+    // loveBtn ქრება
+    this.style.display='none';
+
+    // Ki/No ღილაკები გამოჩნდება
+    document.getElementById("buttonsDiv").style.opacity=1;
+});
+
+/* "არა" ღილაკი – მხოლოდ 3 ჯერ დახტუნავს */
+function moveNo(){
+    if(noCount<3){
+        const noBtn = document.getElementById("no");
+        noBtn.style.left = (window.innerWidth * 0.35 + Math.random() * window.innerWidth * 0.3) + "px";
+        noBtn.style.top = (window.innerHeight * 0.25 + Math.random() * 0.2*window.innerHeight) + "px";
+        noCount++;
+    }
+    yesSize += 6;
+    document.getElementById("yes").style.fontSize = yesSize + 'px';
+}
+
+/* "კი" ღილაკი */
+function yesClicked(){
+    // ღილაკები ქრება
+    document.getElementById("buttonsDiv").style.display='none';
+
+    // წერილი რჩება
+    document.getElementById("message").innerHTML=`
+        <div class="letter">
+        ❤️💗❤️<br><br>
+        ჰიჰიჰი, მიყვარხარ 💕<br><br>
+        მადლობა რომ ხარ ჩემს ცხოვრებაში.<br>
+        ბაი 😘 p.s საჩუქარს დღეს და 
+        ყვავილებს 14 ში მიიღებ 
+        </div>
+    `;
+}
+</script>
 </body>
 </html>
+
