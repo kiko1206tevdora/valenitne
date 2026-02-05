@@ -109,4 +109,87 @@ button {
 
     <div class="buttons" id="buttonsDiv">
         <button id="yes" onclick="yesClicked()">კი 💖</button>
-        <button id="no" onclick="moveNo()"
+        <button id="no" onclick="moveNo()">არა 🙈</button>
+    </div>
+
+    <div id="message"></div>
+</div>
+
+<script>
+let yesSize = 22;
+let noCount = 0;
+
+/* სტარტი fade-in */
+window.onload = function(){
+    const early = document.getElementById('earlyMsg');
+    const startBtn = document.getElementById('startBtn');
+    setTimeout(()=>{
+        early.style.opacity=1;
+        early.style.transform='scale(1)';
+        startBtn.style.opacity=1;
+    },500);
+};
+
+function startValentine(){
+    document.getElementById("mymusic").play();
+
+    const early = document.getElementById('earlyMsg');
+    early.style.opacity=0;
+
+    const photo1 = document.getElementById("mainPhoto");
+    photo1.style.opacity=1;
+
+    const startBtn = document.getElementById("startBtn");
+    startBtn.onclick=function(){
+        photo1.style.opacity=0;
+        const photo2 = document.getElementById("secondPhoto");
+        photo2.style.opacity=1;
+
+        startBtn.style.display='none';
+        const buttonsDiv = document.getElementById("buttonsDiv");
+        buttonsDiv.style.opacity=1;
+    }
+}
+
+/* "არა" ღილაკი */
+function moveNo(){
+    const noBtn = document.getElementById("no");
+    noBtn.style.left = (window.innerWidth * 0.3 + Math.random() * window.innerWidth * 0.4) + "px"; // მორიდებით გადაადგილება
+    noBtn.style.top = (window.innerHeight * 0.3 + Math.random() * window.innerHeight * 0.4) + "px";
+    
+    noCount++;
+    yesSize += 6;
+    document.getElementById("yes").style.fontSize = yesSize + 'px';
+
+    if(noCount >= 5){ noBtn.style.display='none'; }
+}
+
+/* "კი" ღილაკი */
+function yesClicked(){
+    document.getElementById("message").innerHTML=`
+        <div class="letter">
+        ❤️💗❤️<br><br>
+        ჰიჰიჰი, მიყვარხარ 💕<br><br>
+        მადლობა რომ ხარ ჩემს ცხოვრებაში.<br>
+        ბაი 😘 p.s საჩუქარს დღეს და 
+        ყვავილებს 14 ში მიიღებ 
+        </div>
+    `;
+}
+
+/* გულები */
+setInterval(()=>{
+    const heart=document.createElement('div');
+    heart.className='heart';
+    heart.innerHTML='❤️';
+    heart.style.left=Math.random()*100+'vw';
+    heart.style.fontSize=(Math.random()*20+15)+'px';
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),12000);
+},800);
+
+document.getElementById("startBtn").addEventListener("click",startValentine);
+</script>
+
+</body>
+</html>
