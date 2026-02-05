@@ -14,17 +14,7 @@ body {
     color: #f5c6d6;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
     align-items: center;
-    padding-top: 40px; /* სტარტის დაშორება ზემოდან */
-}
-
-button {
-    padding: 12px 35px;
-    font-size: 22px;
-    border-radius: 40px;
-    cursor: pointer;
-    transition: 0.5s;
 }
 
 /* ფოტოები */
@@ -37,14 +27,29 @@ img {
     opacity:0;
 }
 
-/* Ki/No ღილაკები გვერდიგვერდ */
+/* დიდი ტექსტი ჯერ ადრეა */
+#textMsg {
+    font-size: 36px;
+    margin-top: 80px; /* სტარტის დაშორება ზემოდან */
+    margin-bottom: 20px;
+}
+
+/* ღილაკები */
+button {
+    padding: 12px 35px;
+    font-size: 22px;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+/* Ki/No Buttons გვერდიგვერდ */
 .buttons { 
-    margin-top: 10px;
     display: flex; 
     justify-content: center; 
     gap: 30px; 
-    position: relative;
     opacity:0;
+    margin-top:10px; /* ახლოს ფოტო2-ს */
 }
 
 /* ღილაკების ფერები */
@@ -63,7 +68,6 @@ button#no { background-color: #555; color:white;}
 /* წერილი */
 .letter {
     width: 320px;
-    margin: 10px auto 0px; 
     background: #3b0f22;
     color: #ffd6e5;
     padding: 20px;
@@ -71,15 +75,10 @@ button#no { background-color: #555; color:white;}
     box-shadow: 0 15px 35px rgba(0,0,0,0.7);
     animation: open 1s ease forwards;
     font-size:18px;
-    margin-top: 15px;
+    margin-top: 15px; /* ახლოს ღილაკებთან */
 }
 
-/* დიდი ტექსტი ჯერ ადრეა */
-#textMsg {
-    font-size: 36px;
-    margin-bottom: 20px;
-}
-
+/* ფლოტის ანიმაცია */
 @keyframes float { from {transform: translateY(0);} to {transform: translateY(-120vh);} }
 </style>
 </head>
@@ -139,12 +138,17 @@ document.getElementById("startBtn").addEventListener("click", function(){
 document.getElementById("loveBtn").addEventListener("click", function(){
     document.getElementById("photo1").style.opacity=0;
     document.getElementById("photo2").style.opacity=1;
-    this.style.display='none';
-    document.getElementById("buttonsDiv").style.opacity=1;
 
-    // Photo2 + Buttons + Letter უფრო ზემოთ გამოჩნდეს
-    document.getElementById("buttonsDiv").style.marginTop = "10px";
-    document.getElementById("message").style.marginTop = "15px";
+    this.style.display='none';
+
+    // Ki/No ღილაკები ზემოთ photo2–სთან
+    const buttonsDiv = document.getElementById("buttonsDiv");
+    buttonsDiv.style.opacity=1;
+    buttonsDiv.style.marginTop = "10px";
+
+    // წერილი ზემოთ, ახლოს ფოტო2–ს და ღილაკებთან
+    const messageDiv = document.getElementById("message");
+    messageDiv.style.marginTop = "15px";
 });
 
 /* "არა" ღილაკი – მხოლოდ 3 ჯერ დახტუნავს */
