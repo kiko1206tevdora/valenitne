@@ -17,7 +17,7 @@ body {
 .container {
     position: relative;
     z-index: 2;
-    margin-top: 70px;
+    margin-top: 50px;
 }
 
 h1 {
@@ -34,10 +34,15 @@ img {
     border-radius: 25px;
     margin: 20px 0;
     box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    transition: opacity 1.2s ease-in-out;
+    position: relative;
 }
 
 .buttons {
     margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
 }
 
 button {
@@ -58,6 +63,17 @@ button {
     background-color: #555;
     color: white;
     position: absolute;
+}
+
+#startBtn {
+    padding: 15px 40px;
+    font-size: 26px;
+    border: none;
+    border-radius: 50px;
+    background: #ff4f87;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 20px;
 }
 
 /* ნელი, მუქი გულები */
@@ -87,38 +103,40 @@ button {
 }
 
 @keyframes open {
-    from {
-        transform: scaleY(0);
-        opacity: 0;
-    }
-    to {
-        transform: scaleY(1);
-        opacity: 1;
-    }
+    from { transform: scaleY(0); opacity: 0; }
+    to { transform: scaleY(1); opacity: 1; }
+}
+
+/* bounce effect for "no" button */
+@keyframes bounce {
+    0% { transform: translate(0,0); }
+    25% { transform: translate(-15px,-10px); }
+    50% { transform: translate(10px,5px); }
+    75% { transform: translate(-10px,10px); }
+    100% { transform: translate(0,0); }
 }
 </style>
 </head>
-
 <body>
 
 <audio id="mymusic" loop>
     <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<button onclick="document.getElementById('mymusic').play()">
-    ჩართე მუსიკა 🎵
-</button>
-
-
-<div class="container">
+<div class="container" id="mainContainer">
     <h1>გახდები ჩემი ვალენტინი ბასუსუნა ? ❤️</h1>
     <p>ჩემო პატარა წრუწუნა </p>
 
-    <img src="photo.jpg" alt="ჩვენი ფოტო">
+    <!-- ფოტოები -->
+    <img src="photo1.jpg" id="mainPhoto" alt="ჩემი ბოთე გოგო" style="opacity:1;">
+    <img src="photo2.jpg" id="secondPhoto" alt="ჰიჰი" style="opacity:0; position:absolute; top:50px; left:50%; transform:translateX(-50%);">
 
     <p>ჩემი სიცოცხლის აზრი ხარ შენ 💌</p>
 
-    <div class="buttons">
+    <!-- დაწყების ღილაკი -->
+    <button id="startBtn" onclick="startValentine()">მიყვარხარ 💖</button>
+
+    <div class="buttons" id="buttonsDiv" style="display:none;">
         <button id="yes" onclick="yesClicked()">კი 💖</button>
         <button id="no" onclick="moveNo()">არა 🙈</button>
     </div>
@@ -130,20 +148,42 @@ button {
 let yesSize = 22;
 let noCount = 0;
 
+function startValentine() {
+    // ჩართე მუსიკა
+    document.getElementById("mymusic").play();
+
+    // ნაზად ჩასვლა მეორე ფოტოზე
+    const photo1 = document.getElementById("mainPhoto");
+    const photo2 = document.getElementById("secondPhoto");
+
+    // fade effect
+    photo1.style.opacity = 0;
+    photo2.style.opacity = 1;
+
+    // წაშალე მიყვარხარ ღილაკი
+    document.getElementById("startBtn").style.display = "none";
+
+    // ჩაჩვენე ღილაკები "კი/არა"
+    document.getElementById("buttonsDiv").style.display = "flex";
+}
+
 function moveNo() {
     const noBtn = document.getElementById("no");
 
+    // შემთხვევითი პოზიცია
     noBtn.style.left = Math.random() * (window.innerWidth - 120) + "px";
-    noBtn.style.top = Math.random() * (window.innerHeight - 120) + "px";
+    noBtn.style.top = Math.random() * (window.innerHeight - 60) + "px";
+
+    // bounce effect
+    noBtn.style.animation = "bounce 0.6s";
 
     noCount++;
-
-    if (noCount >= 3) {
-        noBtn.style.display = "none";
-    }
-
     yesSize += 6;
     document.getElementById("yes").style.fontSize = yesSize + "px";
+
+    if (noCount >= 5) {
+        noBtn.style.display = "none";
+    }
 }
 
 function yesClicked() {
@@ -170,6 +210,5 @@ setInterval(() => {
     setTimeout(() => heart.remove(), 12000);
 }, 800);
 </script>
-
 </body>
 </html>
